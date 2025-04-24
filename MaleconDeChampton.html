@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Letras de Champotón</title>
+    <link rel="icon" href="logo1.png" type="image/png">
+    <link rel="stylesheet" href="styles2.css">
+    <script src="https://kit.fontawesome.com/fcdfe8990a.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    
+    <style>
+        .map-section {
+            display: flex;
+            justify-content: center;
+            margin: 40px 20px;
+        }
+    
+        .map-box {
+            width: 100%;
+            max-width: 700px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0px 6px 12px rgba(0,0,0,0.15);
+            padding: 20px;
+            text-align: center;
+        }
+    
+        #mapa_mio {
+            height: 400px;
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        /* Asegura que el mapa se mueva en el fondo */
+#mapa_mio {
+    height: 60vh; /* Que el mapa ocupe toda la altura de la pantalla */
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 15px;
+    position: relative;
+    z-index: 1; /* Mapa en el fondo */
+}
+
+/* Menú fijo en la parte inferior */
+.footer-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff; /* Fondo blanco para el menú */
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100; /* Menú al frente */
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2); /* Sombra para el menú */
+}
+
+/* Otras secciones del contenido */
+.search-section, .map-section {
+    z-index: 1; /* Asegura que las demás secciones queden detrás del menú */
+}
+
+    </style>
+    
+    <style>
+        .carousel-container {
+            position: relative;
+        }
+
+        .carousel-item {
+            height: 200px;
+        }
+
+        .carousel-item img {
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #503C24;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #503C24;
+        }
+
+        .place-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            padding: 15px;
+        }
+
+        .place-card img {
+            width: 300px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .place-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex: 1;
+            gap: 15px;
+        }
+
+        .place-info p {
+            flex: 1;
+            text-align: justify;
+            font-size: 14px;
+            margin: 0;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .place-info h3 {
+            font-size: 20px;
+            margin: 0 0 8px 0;
+            width: 100%;
+        }
+
+        .map-button {
+            background-color: #503C24;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .map-button:hover {
+            background-color: #503C24;
+        }
+
+        @media (max-width: 768px) {
+            .place-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .place-info {
+                flex-direction: column;
+            }
+        }
+
+        .emergency i {
+            color: white;
+        }
+
+    </style>
+
+<style>
+    .leaflet-routing-container {
+        display: none !important;
+    }
+
+    .leaflet-control-attribution {
+    display: none !important;
+}
+
+.page-end-space {
+    height: 80px; /* Ajusta según el tamaño de tu menú inferior */
+}
+
+
+</style>
+
+</head>
+<body>
+
+    <!-- 🔹 Apartado de Búsqueda con Logo -->
+    <div class="search-section">
+        <img src="logo.png" alt="Logo de TURIS APP" class="logo">
+        <input type="text" class="search-bar" placeholder="Buscar lugares, restaurantes, hoteles...">
+        <button class="search-button"><i class="fas fa-search"></i></button>
+    </div>
+
+
+    </div>
+    <div class="place-card">
+        <div class="place-info">
+            <div>
+                <h3>Letras de Champotón</h3>
+                <div id="mapa_mio"></div>
+                <h1> </h1>
+                <p>
+                    Boca del Río es una pequeña comunidad ubicada al sur de Champotón, famosa por su paisaje costero, donde el río se encuentra con el mar. 
+                    Es un lugar tranquilo perfecto para disfrutar de la naturaleza, observar aves y relajarse en sus playas de aguas calmas. 
+                    Ideal para los amantes del ecoturismo y quienes buscan un escape natural sin alejarse demasiado del centro de Champotón.
+                </p>
+            </div>
+            <!-- Carrusel de imágenes -->
+            <div id="carouselBoca" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width: 300px;">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="LETRAC.png" class="d-block w-100" alt="Vista panorámica">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="LETRAC1.jpg" class="d-block w-100" alt="Atardecer en la playa">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="LETRAC3.jpg" class="d-block w-100" alt="Zona costera">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselBoca" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselBoca" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+ <!-- Espacio al final para que el contenido no quede pegado al menú -->
+<div class="page-end-space"></div>
+
+    <script>
+        //modificar la ubicacion para cada lugar
+        const map = L.map('mapa_mio').setView([19.357990981010996, -90.7248703390379], 13); // Coordenadas de Boca del Río, Campeche
+        
+        // Capa base de mapa
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+        
+        // Marcador en Boca del Río con ícono personalizado
+        const bocaDelRioIcon = L.icon({
+            iconUrl: 'playa.png',  // Puedes cambiar esta URL por cualquier ícono de tu elección
+            iconSize: [32, 32], // Tamaño del ícono
+            iconAnchor: [16, 32], // Ancla del ícono
+            popupAnchor: [0, -32] // Lugar donde aparece el popup
+        });
+    
+        // Marcador de Boca del Río
+        L.marker([19.357990981010996, -90.7248703390379], { icon: bocaDelRioIcon }).addTo(map)
+            .bindPopup('Letras de Champotón')
+            .openPopup();
+    
+        // Obtener ubicación del usuario
+        map.locate({ setView: true, maxZoom: 14 });
+        
+        // Cuando se detecta ubicación
+        map.on('locationfound', function (e) {
+            // Icono personalizado para la ubicación del usuario
+            const userIcon = L.icon({
+                iconUrl: 'marcador.png',  // Puedes cambiar esta URL por cualquier ícono de tu elección
+                iconSize: [32, 32], // Tamaño del ícono
+                iconAnchor: [16, 32], // Ancla del ícono
+                popupAnchor: [0, -32] // Lugar donde aparece el popup
+            });
+    
+            // Marcador del usuario con ícono personalizado
+            const userMarker = L.marker(e.latlng, { icon: userIcon }).addTo(map)
+                .bindPopup("Estás aquí").openPopup();
+            
+            // Mostrar ruta desde ubicación hasta Boca del Río
+            L.Routing.control({
+                waypoints: [
+                    L.latLng(e.latitude, e.longitude),
+                    L.latLng(19.357990981010996, -90.7248703390379)
+                ],
+                routeWhileDragging: false,
+                addWaypoints: false,
+                draggableWaypoints: false,
+                fitSelectedRoutes: true,
+                createMarker: () => null,
+                show: false
+            }).addTo(map);
+        });
+    
+        // Si no se puede detectar ubicación
+        map.on('locationerror', function () {
+            alert("No se pudo obtener tu ubicación.");
+        });
+    </script>
+    
+    
+    <!-- 🔹 Menú inferior -->
+    <footer class="footer-menu">
+        <a href="#"><i class="fas fa-map-marker-alt"></i> Lugares</a>
+        <a href="#"><i class="fas fa-utensils"></i> Restaurantes</a>
+        <div class="emergency-container">
+            <a href="#" class="emergency"><i class="fas fa-exclamation-triangle"></i></a>
+        </div>
+        <a href="#"><i class="fas fa-hotel"></i> Hoteles</a>
+        <a href="#"><i class="fas fa-gem"></i> Artesanías</a>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- 🔴 VENTANA EMERGENTE DE NÚMEROS DE EMERGENCIA -->
+    <div id="emergency-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3>Emergencias en México</h3>
+            <p>Presiona un número para llamar:</p>
+            <ul class="emergency-list">
+                <li><a href="tel:911">🚨 Emergencias generales: 911</a></li>
+                <li><a href="tel:065">🚑 Cruz Roja: 065</a></li>
+                <li><a href="tel:066">🚓 Policía: 066</a></li>
+                <li><a href="tel:068">🚒 Bomberos: 068</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 🔧 Script para abrir/cerrar modal -->
+    <script>
+        const modal = document.getElementById('emergency-modal');
+
+        // Abrir modal al dar clic en botón emergencia
+        document.querySelector('.emergency').addEventListener('click', function(e) {
+            e.preventDefault();
+            modal.style.display = 'flex';
+        });
+
+        // Cerrar modal
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // Cerrar si se hace clic fuera del modal
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        
+    </script>
+    
+    
+
+</body>
+</html>

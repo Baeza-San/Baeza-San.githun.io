@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="ICONODESTINOCHAKAN.png" type="image/png">
+    <title>Destino Chakan</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="https://kit.fontawesome.com/fcdfe8990a.js" crossorigin="anonymous"></script>
+    <style>
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .footer-menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #eee;
+    padding: 8px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.footer-menu a {
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+    color: #5B9531;
+    font-size: 13px;
+}
+
+.footer-menu i {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 2px;
+}
+
+
+        #lang-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background-color: #5B9531;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 999;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #lang-btn span {
+            display: block;
+            font-weight: bold;
+        }
+
+        #lang-btn small {
+            font-size: 12px;
+        }
+
+        .emergency i {
+    color: white;
+}
+    </style>
+</head>
+<body>
+<!-- Bloqueo de contenido para PC -->
+<div class="block-background">
+    <div class="blocked-content">
+        <div class="block-message">
+            <p>Lo sentimos, la página no está disponible para este dispositivo.</p>
+        </div>
+    </div>
+</div>
+
+    <div class="header-background"></div>
+
+    <!-- 🔹 Botón Fijo de Idioma -->
+    <button id="lang-btn" onclick="toggleLang()">
+        <span>Idioma</span>
+        <small id="current-lang">Español</small>
+    </button>
+
+    <!-- 🔹 Buscador -->
+    <div class="search-section">
+        <img src="ICONODESTINOCHAKAN.png" alt="Logo de TURIS APP" class="logo">
+        <input type="text" class="search-bar" placeholder="Buscar lugares, restaurantes, hoteles...">
+        <button class="search-button"><i class="fas fa-search"></i></button>
+    </div>
+
+    <!-- 🔹 Contenido -->
+    <div class="content-container">
+        <h2 id="titulo">Lugares Recomendados</h2>
+        <div class="cards-container">
+            <div class="card">
+                <img src="lugar1.jpg" alt="Playa">
+                <div class="card-content">
+                    <h3 class="place-title">Playa Champotón</h3>
+                    <p class="place-desc">Hermosa vista al mar y atardeceres inolvidables.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="lugar2.jpg" alt="Malecón">
+                <div class="card-content">
+                    <h3 class="place-title">Malecón de Champotón</h3>
+                    <p class="place-desc">Ideal para caminar y disfrutar del aire fresco.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔹 Menú inferior -->
+    <footer class="footer-menu">
+        <a href="http://192.168.1.4:5500/Lugares.html"><i class="fas fa-map-marker-alt"></i> <span class="footer-text">Lugares</span></a>
+        <a href="#"><i class="fas fa-utensils"></i> <span class="footer-text">Restaurantes</span></a>
+        <div class="emergency-container">
+            <a href="#" class="emergency"><i class="fas fa-exclamation-triangle"></i></a>
+        </div>
+        <a href="#"><i class="fas fa-hotel"></i> <span class="footer-text">Hoteles</span></a>
+        <a href="#"><i class="fas fa-book-open"></i><span class="footer-text">Leyendas</span></a>
+    <a href="#"><i class="fas fa-bus"></i><span class="footer-text">Transporte</span></a>
+    </footer>
+    
+
+    <!-- 🔹 Script de cambio de idioma -->
+    <script>
+        let isSpanish = true;
+
+        function toggleLang() {
+            isSpanish = !isSpanish;
+
+            // Cambiar el texto del botón
+            document.getElementById('current-lang').textContent = isSpanish ? 'Español' : 'English';
+
+            // Cambiar el título
+            document.getElementById('titulo').textContent = isSpanish ? 'Lugares Recomendados' : 'Recommended Places';
+
+            // Cambiar los textos de las tarjetas
+            const titles = document.querySelectorAll('.place-title');
+            const descs = document.querySelectorAll('.place-desc');
+            const footers = document.querySelectorAll('.footer-text');
+
+            const data = isSpanish
+                ? [
+                    ['Playa Champotón', 'Hermosa vista al mar y atardeceres inolvidables.'],
+                    ['Malecón de Champotón', 'Ideal para caminar y disfrutar del aire fresco.'],
+                    ['Lugares', 'Restaurantes', 'Hoteles', 'Artesanías']
+                ]
+                : [
+                    ['Champotón Beach', 'Beautiful sea view and unforgettable sunsets.'],
+                    ['Champotón Boardwalk', 'Perfect for a walk and fresh air.'],
+                    ['Places', 'Restaurants', 'Hotels', 'Crafts']
+                ];
+
+            titles.forEach((el, i) => el.textContent = data[i][0]);
+            descs.forEach((el, i) => el.textContent = data[i][1]);
+            footers.forEach((el, i) => el.textContent = data[2][i]);
+        }
+        
+    </script>
+<!-- 🔴 VENTANA EMERGENTE DE NÚMEROS DE EMERGENCIA -->
+<div id="emergency-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h3>Emergencias en México</h3>
+        <p>Presiona un número para llamar:</p>
+        <ul class="emergency-list">
+            <li><a href="tel:911">🚨 Emergencias generales: 911</a></li>
+            <li><a href="tel:065">🚑 Cruz Roja: 065</a></li>
+            <li><a href="tel:066">🚓 Policía: 066</a></li>
+            <li><a href="tel:068">🚒 Bomberos: 068</a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- 🔧 Script para abrir/cerrar modal -->
+<script>
+    const modal = document.getElementById('emergency-modal');
+
+    // Abrir modal al dar clic en botón emergencia
+    document.querySelector('.emergency').addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.style.display = 'flex';
+    });
+
+    // Cerrar modal
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    // Cerrar si se hace clic fuera del modal
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+</script>
+
+    
+
+</body>
+</html>
+

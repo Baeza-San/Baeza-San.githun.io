@@ -1,0 +1,24 @@
+#map {
+    height: 400px;
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 80px; /* Agrega espacio para que no se superponga con el menú */
+    position: relative;
+    z-index: 5; /* Asegura que el mapa quede debajo del menú */
+}
+
+.map-button {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+}
+
+.map-button:hover {
+    background-color: #0056b3;
+}
