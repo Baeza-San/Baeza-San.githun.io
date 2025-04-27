@@ -212,6 +212,24 @@
                     <img src="RESCURSOSBRISAS/ICONOBRISAS.jpg" alt="Logo Restaurante Las Brisas" style="height: 80px; width: 80px; object-fit: contain; border-radius: 50%;">
                     Restaurante Las Brisas Malecón.
                 </h3>
+                <div id="loadingRuta" style="
+                display: none;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(255, 255, 255, 0.9);
+                padding: 20px 40px;
+                border-radius: 12px;
+                box-shadow: 0px 0px 10px #5B9531;
+                z-index: 2000;
+                font-weight: bold;
+                color: #5B9531;
+                text-align: center;
+                ">
+    <i class="fas fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 10px;"></i><br>
+    Cargando ruta...
+</div>
                 <div id="mapa_mio"></div>
                 <h1> </h1>
             </div>
@@ -239,7 +257,7 @@
 </p>
 
  <!-- Carrusel de imágenes -->
- <div id="carouselBoca" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width: 290px;" >
+ <div id="carouselBoca" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width: 300px;" >
     <div class="carousel-inner">
         <div class="carousel-item active">
             <img src="RESCURSOSBRISAS/IMG1B.jpg" class="d-block w-100" alt="Vista panorámica" style="border-radius: 10%;">
@@ -316,6 +334,9 @@
 </script>
 
 <script>
+    // Mostrar animación de cargando desde el inicio
+    document.getElementById('loadingRuta').style.display = 'block';
+
     // Crear el mapa
     const map = L.map('mapa_mio').setView([19.337347429066913, -90.73506274674062], 13);
 
@@ -381,34 +402,6 @@
         .bindPopup(contenidoPopup)
         .openPopup();
 
-    // Crear el control de la ruta
-    let userRouteControl = L.Routing.control({
-        waypoints: [
-            L.latLng(19.337347429066913, -90.73506274674062), // Restaurante
-            L.latLng(19.337347429066913, -90.73506274674062)  // Actualización de la ubicación
-        ],
-        routeWhileDragging: false,
-        addWaypoints: false,
-        draggableWaypoints: false,
-        fitSelectedRoutes: true,
-        createMarker: () => null,
-        show: false,
-        lineOptions: {
-            styles: [{ color: '#5B9531', weight: 5, opacity: 0.7 }],
-            pane: 'rutasPane'
-        }
-    }).addTo(map);
-
-    // Función para actualizar la ruta según la ubicación del usuario
-    function actualizarRuta(e) {
-        // Actualiza el primer punto de la ruta con la ubicación actual del usuario
-        userRouteControl.spliceWaypoints(0, 1, e.latlng);
-        userRouteControl.setWaypoints([e.latlng, L.latLng(19.337347429066913, -90.73506274674062)]); // Segundo punto sigue siendo el restaurante
-
-        // Mover el mapa para centrar la ubicación del usuario
-        map.setView(e.latlng, 14);
-    }
-
     // Ubicación del usuario
     map.locate({ setView: true, maxZoom: 14 });
 
@@ -423,12 +416,33 @@
         L.marker(e.latlng, { icon: userIcon }).addTo(map)
             .bindPopup("Estás aquí").openPopup();
 
-        // Actualiza la ruta para que siga al usuario
-        actualizarRuta(e);
+        // Crear control de ruta
+        const control = L.Routing.control({
+            waypoints: [
+                L.latLng(e.latitude, e.longitude),
+                L.latLng(19.337347429066913, -90.73506274674062)
+            ],
+            routeWhileDragging: false,
+            addWaypoints: false,
+            draggableWaypoints: false,
+            fitSelectedRoutes: true,
+            createMarker: () => null,
+            show: false,
+            lineOptions: {
+                styles: [{ color: '#5B9531', weight: 5, opacity: 0.7 }],
+                pane: 'rutasPane'
+            }
+        }).addTo(map);
+
+        // Cuando encuentre la ruta, ocultar el cargando
+        control.on('routesfound', function() {
+            document.getElementById('loadingRuta').style.display = 'none';
+        });
     });
 
     map.on('locationerror', function () {
         alert("No se pudo obtener tu ubicación. Asegúrate de activar el GPS o la ubicación del navegador.");
+        document.getElementById('loadingRuta').style.display = 'none'; // También ocultar si hay error
     });
 </script>
 
