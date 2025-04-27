@@ -333,7 +333,6 @@
 
     contenedorMenu.innerHTML += '</ul>';
 </script>
-
 <script>
     // Mostrar animación de cargando desde el inicio
     document.getElementById('loadingRuta').style.display = 'block';
@@ -348,10 +347,10 @@
     }).addTo(map);
 
     // Crear un pane especial para rutas que esté debajo de las etiquetas
-    map.createPane("rutasPane");
-    map.getPane("rutasPane").style.zIndex = 399;
+    map.createPane('rutasPane');
+    map.getPane('rutasPane').style.zIndex = 399;
 
-    // Ícono personalizado
+    // Ícono personalizado del restaurante
     const bocaDelRioIcon = L.icon({
         iconUrl: 'RESCURSOSBRISAS/ICONOBRISAS.jpg',
         iconSize: [32, 32],
@@ -359,9 +358,9 @@
         popupAnchor: [0, -32]
     });
 
-    // Horarios
+    // Horarios del restaurante
     const horarios = {
-        0: ["07:30", "19:00"], // Domingo
+        0: ["07:30", "19:00"],
         1: ["07:30", "19:00"],
         2: ["07:30", "19:00"],
         3: ["07:30", "19:00"],
@@ -371,19 +370,18 @@
     };
 
     const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-
     const ahora = new Date();
     const dia = ahora.getDay();
     const horaActual = ahora.getHours() + ahora.getMinutes() / 60;
 
     const [inicioStr, finStr] = horarios[dia];
-    const [hi, mi] = inicioStr.split(":").map(Number);
-    const [hf, mf] = finStr.split(":").map(Number);
+    const [hi, mi] = inicioStr.split(':').map(Number);
+    const [hf, mf] = finStr.split(':').map(Number);
     const horaInicio = hi + mi / 60;
     const horaFin = hf + mf / 60;
-
     const abierto = horaActual >= horaInicio && horaActual <= horaFin;
 
+    // Contenido del popup del restaurante
     const contenidoPopup = `
         <div style="display: flex; align-items: center;">
             <img src="RESCURSOSBRISAS/RBRIAS1.jpg" alt="Restaurante Las Brisas"
@@ -398,15 +396,17 @@
         </div>
     `;
 
-    // Marcador de la cafetería
-    L.marker([19.337347429066913, -90.73506274674062], { icon: bocaDelRioIcon }).addTo(map)
+    // Agregar marcador del restaurante
+    L.marker([19.337347429066913, -90.73506274674062], { icon: bocaDelRioIcon })
+        .addTo(map)
         .bindPopup(contenidoPopup)
         .openPopup();
 
-    // Ubicación del usuario
+    // Buscar ubicación del usuario
     map.locate({ setView: true, maxZoom: 14 });
 
     map.on('locationfound', function (e) {
+        // Ícono personalizado de ubicación del usuario
         const userIcon = L.icon({
             iconUrl: 'MIUBICACION.png',
             iconSize: [32, 32],
@@ -414,10 +414,13 @@
             popupAnchor: [0, -32]
         });
 
-        L.marker(e.latlng, { icon: userIcon }).addTo(map)
-            .bindPopup("Estás aquí").openPopup();
+        // Marcador de usuario
+        L.marker(e.latlng, { icon: userIcon })
+            .addTo(map)
+            .bindPopup("Estás aquí")
+            .openPopup();
 
-        // Crear control de ruta
+        // Crear ruta desde el usuario hasta el restaurante
         const control = L.Routing.control({
             waypoints: [
                 L.latLng(e.latitude, e.longitude),
@@ -435,17 +438,27 @@
             }
         }).addTo(map);
 
-        // Cuando encuentre la ruta, ocultar el cargando
-        control.on('routesfound', function() {
+        control.on('routesfound', function () {
             document.getElementById('loadingRuta').style.display = 'none';
         });
+
+        control.on('routingerror', function () {
+            document.getElementById('loadingRuta').style.display = 'none';
+            alert("No se pudo calcular la ruta. ¡Intenta de nuevo!");
+        });
+
+        // Ocultar el loader si se tarda demasiado
+        setTimeout(() => {
+            document.getElementById('loadingRuta').style.display = 'none';
+        }, 10000);
     });
 
     map.on('locationerror', function () {
         alert("No se pudo obtener tu ubicación. Asegúrate de activar el GPS o la ubicación del navegador.");
-        document.getElementById('loadingRuta').style.display = 'none'; // También ocultar si hay error
+        document.getElementById('loadingRuta').style.display = 'none';
     });
 </script>
+
 
     
     <!-- 🔹 Menú inferior -->
