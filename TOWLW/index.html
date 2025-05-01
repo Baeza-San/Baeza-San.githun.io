@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="icono.png" type="image/png">
+  <title>The Outlaw's Last Word</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+   * {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #121212;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 5%;
+  background-color: #202124;
+  width: 100%;
+}
+
+header img {
+  height: 40px;
+  margin-right: 1rem;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  color: white;
+  white-space: nowrap;
+}
+
+.hero {
+  position: relative;
+  height: 50vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 6rem 5% 3rem;
+  color: white;
+  width: 100%;
+}
+
+.container {
+  position: relative;
+  z-index: 3;
+  width: 90%;
+  max-width: 900px;
+  margin: auto;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 2rem;
+  margin-top: -4rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  flex-grow: 1;
+}
+
+.game-info {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.game-info img {
+  width: 120px;
+  border-radius: 20px;
+}
+
+.info-text {
+  flex: 1;
+}
+
+.info-text h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.info-text p {
+  margin: .3rem 0;
+  color: #aaa;
+}
+
+.stats {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #ccc;
+  font-size: .95rem;
+}
+
+.platform-icons {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  font-size: 2rem;
+  color: #00c853;
+}
+
+.platform-icons i {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.platform-icons i:hover {
+  transform: scale(1.2);
+  color: #66ffa6;
+}
+
+.section {
+  margin-top: 2rem;
+}
+
+.carousel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-top: 1rem;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-track img {
+  width: 30%;
+  flex-shrink: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  padding: .3rem .8rem;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.carousel-button.prev {
+  left: .5rem;
+}
+
+.carousel-button.next {
+  right: .5rem;
+}
+
+.review {
+  background-color: #2c2c2c;
+  padding: 1rem;
+  border-left: 5px solid #00c853;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+
+footer {
+  background-color: #202124;
+  color: white;
+  padding: 2rem 5%;
+  text-align: center;
+  margin-top: auto;
+  width: 100%;
+}
+
+footer .contact-info {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+footer .contact-info a {
+  color: #00c853;
+  text-decoration: none;
+}
+
+footer .social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+footer .social-icons a {
+  color: white;
+  font-size: 1.5rem;
+  transition: color .3s;
+}
+
+footer .social-icons a:hover {
+  color: #00c853;
+}
+
+/* Estilos para la imagen emergente */
+.image-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.image-modal img {
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 10px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Media queries para dispositivos móviles */
+@media screen and (max-width: 768px) {
+  header h1 {
+    font-size: 1.2rem;
+  }
+
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .container {
+    padding: 1.5rem;
+    margin-top: 0;
+  }
+
+  .game-info {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .platform-icons i {
+    font-size: 1.8rem;
+  }
+
+  .carousel-track img {
+    width: 80%;
+  }
+
+  .carousel-button {
+    font-size: 1.5rem;
+  }
+
+  footer {
+    padding: 1rem 2%;
+  }
+}
+
+/* Media queries para pantallas grandes */
+@media screen and (min-width: 1200px) {
+  .hero {
+    height: 60vh;
+  }
+
+  .container {
+    width: 80%;
+  }
+
+  .carousel-track img {
+    width: 25%;
+  }
+
+  .stats {
+    font-size: 1rem;
+  }
+}
+
+/* Estilos para la imagen del nombre "The Outlaw's Last Word" */
+header img {
+  width: 100%; /* Asegura que la imagen no se salga del contenedor */
+  max-width: 00px; /* Limita el tamaño máximo de la imagen */
+  height: auto; /* Mantiene la proporción de la imagen */
+  margin: 0 auto; /* Centra la imagen horizontalmente */
+  display: block; /* Asegura que la imagen esté centrada */
+}
+
+/* Para pantallas móviles */
+@media (max-width: 768px) {
+  header img {
+    max-width: 250px; /* Ajusta el tamaño para móviles */
+  }
+}
+
+/* Para pantallas de PC */
+@media (min-width: 769px) {
+  header img {
+    max-width: 400px; /* Mantén el tamaño adecuado para PC */
+  }
+}
+
+
+  </style>
+</head>
+<body>
+  <header>
+    <img src="icono.png" alt="Icono" style="width: 3rem; margin-right: 0.75rem; color: #00c853;">
+    <h1>TeChamp Studios</h1>
+  </header>
+
+  <div class="hero">
+    <img class="hero-video" src="aa.gif" alt="GIF animado" style="width: 100%; height: auto;">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>The Outlaw's Last Word</h1>
+      <p>Embárcate en una emocionante aventura llena de palabras, desafíos y suspenso. Resuelve las adivinanzas y enfrenta al temido forajido en una batalla de ingenio mientras descifras las palabras secretas para salvar el día.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="game-info">
+      <img src="ICONOJUEGO.png" alt="Icono" style="width: 120px; border-radius: 0;">
+      <div class="info-text">
+        <h2>The Outlaw's Last Word</h2>
+        <p>TeChamp Studios</p>
+        <div class="stats">
+          <span>★ 4.8</span>
+          <span>308 descargas</span>
+          <span>Apto para todo público</span>
+        </div>
+        <div class="platform-icons" style="margin-top: 0.5rem; font-size: 1.5rem; color: #00c853;">
+          <i class="fab fa-windows" title="Disponible en Windows"></i>
+          <i class="fab fa-chrome" title="Disponible en Chrome" style="margin-left: 1rem;"></i>
+        </div>
+      </div>
+    </div> 
+   <center>
+    <div style="height:3rem;"></div>
+        <!-- Botón de jugar -->
+        <a href="https://www.greenfoot.org/scenarios/35027" style="display: inline-block; background-color: #00c853; color: white; padding: 0.75rem 2rem; border-radius: 5px; font-size: 1.2rem; text-decoration: none;">Jugar</a>
+      </center>
+        <div class="section">
+          <h2>Acerca del juego</h2>
+          <p>Embárcate en una emocionante aventura llena de palabras, desafíos y suspenso con The Outlaw's Last Word. ¡Resuelve las adivinanzas, enfrenta al forajido y demuestra tu habilidad para descifrar las palabras antes de que sea demasiado tarde!</p>
+        </div>
+    <div class="section">
+      <h2>Capturas de pantalla</h2>
+      <div class="carousel">
+        <div class="carousel-track" id="carousel-track">
+          <img src="G1.png" alt="1" onclick="openImage(this.src)">
+          <img src="G2.png" alt="2" onclick="openImage(this.src)">
+          <img src="G3.jpg" alt="3" onclick="openImage(this.src)">
+          <img src="G4.png" alt="4" onclick="openImage(this.src)">
+          <img src="G5.png" alt="5" onclick="openImage(this.src)">
+        </div>
+        <button class="carousel-button prev" onclick="scrollCarousel(-1)">&lt;</button>
+        <button class="carousel-button next" onclick="scrollCarousel(1)">&gt;</button>
+      </div>
+    </div>
+
+    
+    <div class="section">
+      <h2>Opiniones</h2>
+      <div class="review"><strong>Juan Pérez:</strong> ¡Muy divertido y adictivo!</div>
+      <div class="review"><strong>Ana López:</strong> Los personajes están súper lindos y los combates geniales.</div>
+    </div>
+
+    <div class="section">
+      <h2>Acerca de este juego</h2>
+      <p><strong>¡The Outlaw's Last Word es una emocionante aventura de palabras llena de acción y suspenso!</strong></p>
+      <p><strong>Lanzamiento oficial:</strong> 15 abr 2025</p>
+      <p>El último aliento del forajido se ha pronunciado.<br>¡Únete al desafío y pon a prueba tu ingenio para resolver las palabras secretas mientras enfrentas al temido forajido en una batalla de adivinanzas!</p>
+      <div class="stats" style="margin-top:2rem;">
+        <div><strong>Actualización</strong><br>16 abr 2025</div>
+        <div><strong>Disponible en</strong><br><a href="#" style="color:#00c853;">Chrome</a>, <a href="#" style="color:#00c853;">Windows</a>, <a href="#" style="color:#00c853;">Greenfoot</a></div>
+      </div>
+    </div>
+    
+    <div class="section" style="margin-top:2rem;">
+      <h2>Jugar en PC</h2>
+      <p>Disfruta de The Outlaw's Last Word en tu PC con Windows, donde podrás resolver las adivinanzas en pantalla grande y poner a prueba tus habilidades en esta emocionante batalla de palabras.</p>
+      <ul style="list-style:none; padding-left:0;">
+        <li>✔️ Experiencia completa de The Outlaw's Last Word en PC</li>
+        <li>✔️ Pantalla más grande para disfrutar de los desafíos</li>
+        <li>✔️ Controles optimizados para una experiencia más fluida</li>
+        <li>✔️ Sincronización entre dispositivos (¡Juega en PC y continúa en tu navegador!)</li>
+        <li>✔️ Desbloquea logros y puntajes altos mientras desafías al forajido</li>
+      </ul>
+      <h3 style="margin-top:1.5rem;">Requisitos mínimos para jugar en navegador</h3>
+      <ul style="list-style:none; padding-left:0;">
+        <li><strong>SO:</strong> Windows, macOS, o Linux</li>
+        <li><strong>Navegador:</strong> Chrome, Firefox, o Edge (última versión)</li>
+        <li><strong>RAM:</strong> 4 GB mínimo</li>
+        <li><strong>Conexión a internet:</strong> Requerida para jugar en línea</li>
+      </ul>
+      <h3 style="margin-top:1.5rem;">Requisitos para jugar en Greenfoot</h3>
+      <ul style="list-style:none; padding-left:0;">
+        <li><strong>SO:</strong> Windows, macOS, o Linux</li>
+        <li><strong>Greenfoot:</strong> Última versión de Greenfoot instalada</li>
+        <li><strong>RAM:</strong> 4 GB mínimo</li>
+        <li><strong>Procesador:</strong> Intel Core i3 / AMD Ryzen 3 o superior</li>
+      </ul>
+    </div>
+    
+  </div>
+
+  <!-- Modal para la imagen -->
+  <div class="image-modal" id="image-modal">
+    <button class="close-btn" onclick="closeImage()">×</button>
+    <img id="modal-image" src="" alt="Imagen ampliada">
+  </div>
+  <div style="height:3rem;"></div>
+  <footer>
+    <div class="contact-info">
+      <a href="tecchampstudios@gmail.com">tecchampstudios@gmail.com</a>
+      <a href="tel:+123456789">+52 951 778 3889</a>
+    </div>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    function scrollCarousel(direction) {
+      const track = document.getElementById('carousel-track');
+      const scrollAmount = direction * (track.offsetWidth / 5); // Ajusta el valor para la cantidad de desplazamiento
+      track.scrollLeft += scrollAmount;
+    }
+
+    function openImage(src) {
+      const modal = document.getElementById('image-modal');
+      const modalImage = document.getElementById('modal-image');
+      modal.style.display = 'flex';
+      modalImage.src = src;
+    }
+
+    function closeImage() {
+      const modal = document.getElementById('image-modal');
+      modal.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
