@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💌 Para Mamá</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #ffeaf0, #fff5fa);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .envelope-container {
+      width: 80vw;
+      max-width: 320px;
+      height: 200px;
+      position: relative;
+      cursor: pointer;
+      transition: opacity 1s ease;
+      z-index: 2;
+    }
+
+    .envelope {
+      width: 100%;
+      height: 100%;
+      background-color: #f4b6c2;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .envelope::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-style: solid;
+      border-width: 100px 160px 0 160px;
+      border-color: #f6c1ce transparent transparent transparent;
+    }
+
+    .heart {
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      z-index: 3;
+    }
+
+    .letter {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
+  width: 85vw;
+  max-width: 500px;
+  height: 700px;
+  background: #fff;
+  border: 1px solid #d1b7a1;
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15),
+              inset 0 0 10px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', sans-serif; /* Cambiado aquí */
+  color: #4b2e2e;
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 1.6;
+  opacity: 0;
+  transition: all 1s ease-in-out;
+  z-index: 1;
+  background-image: url('hojacarta.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+}
+
+    .show-letter .letter {
+      transform: translate(-50%, -35%) scale(1);
+      opacity: 1;
+      z-index: 4;
+    }
+
+    .hide-envelope .envelope-container {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .petal {
+      position: fixed;
+      top: -50px;
+      width: 25px;
+      height: 25px;
+      background-image: url('petalo.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: fall linear infinite;
+      opacity: 0.8;
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Estilos para el mensaje del gatito */
+    .cat-message {
+      position: fixed;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      z-index: 7;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .cat-text {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 10px 20px;
+      border-radius: 20px;
+      max-width: 300px;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #4b2e2e;
+      position: relative;
+    }
+
+    .cat-text::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 10px 10px 0;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.8) transparent transparent transparent;
+    }
+
+    .cat-message img {
+      width: 150px; /* Aumenté el tamaño del gatito */
+      height: 150px;
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+
+    .photo-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .floating-photo {
+      position: absolute;
+      width: 90px;
+      max-width: 25vw;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: float 6s ease-in-out infinite;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @media (max-width: 480px) {
+      .letter {
+        font-size: 1.2rem;
+        padding: 20px;
+      }
+      .floating-photo {
+        width: 70px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bg-music" src="The Carpenters Close to you (Español).mp3" autoplay loop></audio>
+
+  <div class="envelope-container" onclick="openEnvelope()">
+    <div class="envelope">
+      <div class="heart">❤️</div>
+    </div>
+  </div>
+
+  <div class="letter">
+    <h2>Querida Mamá</h2>
+    <p>
+        Solo quería decirte que tú eres mi meta a seguir. ¿Por qué? Porque nunca te rindes y siempre estás ahí para ayudarme en los momentos más difíciles. Eres la única persona que cree en mí y me apoya en todo.
+
+        Aunque estemos un poco lejos, nunca olvido a mi mamita. Extraño mucho tus comidas ricas: el pollo adobado, el pollo encebollado… claro que ya sé cómo hacerlo, pero nada como el sabor cuando lo prepara mi mamá, o sea, tú 😊. El sabor de la comida hecha con amor de madre no se compara.
+        
+        Feliz Día de las Madres. Esta es tu carta virtual, pero cuando estés aquí te daré tu regalito, mamita 🌸<br><br>
+      Con todo mi cariño,<br> Tu hijo
+    </p>
+  </div>
+
+  <div class="photo-container"></div>
+
+  <div class="cat-message" id="catMessage">
+    <div class="cat-text" id="catText">¿Seguro que quieres abrir la carta? 🐾</div>
+    <img id="catImage" src="GATO1.jpg" alt="Gatito">
+  </div>
+
+  <script>
+    const photoPaths = [
+      'ma1.jpg', 'ma2.jpg', 'ma3.jpg', 'ma4.jpg',
+      'ma5.jpg', 'ma6.jpg', 'ma7.jpg', 'ma8.jpg', 'ma9.jpg', 'ma10.jpg',
+      'ma11.jpg', 'ma12.jpg', 'ma13.jpg', 'ma14.jpg', 'ma15.jpg', 'ma16.jpg',
+      'ma17.jpg', 'ma18.jpg', 'ma19.jpg', 'ma20.jpg'
+    ];
+
+    let currentPhotoIndex = 0;
+    const photoContainer = document.querySelector('.photo-container');
+    let clickCount = 0;
+
+    const catImages = [
+      'GATO1.png', // Imagen para el primer clic
+      'GATO2.png', // Imagen para el segundo clic
+      'GATO3.png'  // Imagen para el tercer clic
+    ];
+
+    const catTexts = [
+      '¡Seguro que la quieres abrir? ¡No lo recomiendo! 😼', // Texto para el primer clic
+      '¿Todavía aquí? MMMM... 😹', // Texto para el segundo clic
+      '¡Última oportunidad! 😿'  // Texto para el tercer clic
+    ];
+
+    function showNextPhotos() {
+      const oldPhotos = photoContainer.querySelectorAll('.floating-photo');
+      oldPhotos.forEach(photo => {
+        photo.style.opacity = 0;
+      });
+
+      setTimeout(() => {
+        photoContainer.innerHTML = '';
+
+        for (let i = 0; i < 5; i++) {
+          const img = document.createElement('img');
+          img.src = photoPaths[(currentPhotoIndex + i) % photoPaths.length];
+          img.classList.add('floating-photo');
+          img.style.top = Math.random() * 60 + 10 + '%';
+          img.style.left = Math.random() * 60 + 10 + '%';
+          photoContainer.appendChild(img);
+          setTimeout(() => img.style.opacity = 1, 100);
+        }
+
+        currentPhotoIndex = (currentPhotoIndex + 5) % photoPaths.length;
+      }, 1000);
+    }
+
+    function openEnvelope() {
+      clickCount++;
+
+      const catMessage = document.getElementById('catMessage');
+      const catImage = document.getElementById('catImage');
+      const catText = document.getElementById('catText');
+
+      if (clickCount < 4) {
+        // Si el usuario ha hecho menos de 4 clics, cambiar la imagen y el texto del gatito
+        catMessage.style.opacity = 1;
+        catImage.src = catImages[clickCount - 1]; // Cambiar imagen según el clic
+        catText.textContent = catTexts[clickCount - 1]; // Cambiar texto según el clic
+
+        setTimeout(() => {
+          catMessage.style.opacity = 0;
+        }, 2000);
+      } else {
+        // En el cuarto clic, se abre la carta
+        document.body.classList.add('show-letter', 'hide-envelope');
+        document.getElementById('bg-music').play().catch(() => {});
+
+        for (let i = 0; i < 30; i++) {
+          const petal = document.createElement('div');
+          petal.classList.add('petal');
+          petal.style.left = Math.random() * 100 + 'vw';
+          petal.style.animationDuration = (5 + Math.random() * 5) + 's';
+          petal.style.animationDelay = Math.random() * 3 + 's';
+          document.body.appendChild(petal);
+        }
+
+        showNextPhotos();
+        setInterval(showNextPhotos, 5000);
+      }
+    }
+  </script>
+</body>
+</html>

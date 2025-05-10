@@ -1,555 +1,146 @@
-/* 🔹 Reset y Estilos Generales */
-body, html {
-    height: 100%; /* Asegura que el cuerpo ocupe toda la altura */
-    width: 100%;  /* Asegura que el cuerpo ocupe todo el ancho */
-    overflow-x: hidden; /* Evita el desbordamiento horizontal */
-}
-
 body {
-    overflow-y: auto; /* Permite el desplazamiento vertical */
-    overflow-x: hidden; /* Evita el desplazamiento horizontal */
-}
-
-/* 🔹 Espacio inferior para evitar que el footer tape contenido */
-.content-container {
-    padding-bottom: 100px; /* Ajusta según la altura del footer */
-}
-
-
-/* 🔹 Imagen de Fondo en la Parte Superior */
-.header-background {
-    width: 100%;
-    height: 200px; /* Ajusta según lo que necesites */
-    background: url('fondo2.jpg') no-repeat center center;
-    background-size: cover;
-}
-
-/* 🔹 Sección de Búsqueda */
-.search-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 10px;
-    background-color: white;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.logo {
-    height: 40px;
-    margin-right: 10px;
-}
-
-.search-bar {
-    flex-grow: 1;
-    max-width: 400px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.search-button {
-    background-color: #5B9531;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    margin-left: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.search-button:hover {
-    background-color: #619936;
-}
-
-/* 🔹 Contenedor de Lugares o Recomendados */
-.content-container {
-    text-align: center;
-    padding: 20px;
-    width: 100%;
-    max-width: 800px;
-    margin-bottom: 120px; /* Este margen inferior asegura que el contenido no quede cubierto por la barra de menú */
-}
-
-/* 🔹 Estilo para la barra de menú */
-.footer-menu {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: white;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    border-top: 2px solid #5B9531;
-    z-index: 5;
-    border-top-left-radius: 50px 30px; /* Curvatura en el lado izquierdo */
-    border-top-right-radius: 50px 30px; /* Curvatura en el lado derecho */
-}
-
-/* 🔹 Ajuste para pantallas pequeñas */
-@media (max-width: 767px) {
-    .content-container {
-        margin-bottom: 100px; /* Ajusta el margen inferior en pantallas pequeñas */
-    }
-
-    .footer-menu {
-        padding-bottom: 50px;
-    }
-}
-
-
-
-/* 🔹 Tarjeta de Lugar */
-.place-card {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Ajustado para alinear el contenido a la izquierda */
-    background-color: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 15px 0;
-    border-left: 5px solid #5B9531;
-    gap: 15px; /* Añadido espacio entre la imagen y el resto del contenido */
-}
-
-/* 🔹 Imagen del Lugar */
-.place-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 10px;
-    object-fit: cover;
-}
-
-/* 🔹 Información del Lugar */
-.place-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    max-width: 60%;
-}
-
-/* 🔹 Botón de Ver Mapa */
-.map-button {
-    background-color: #5B9531;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s;
-    margin-top: 5px;
-    width: 150px; /* Ajusta el tamaño del botón */
-}
-
-.map-button i {
-    margin-right: 5px;
-}
-
-.map-button:hover {
-    background-color: #5B9531;
-}
-
-/* 🔹 Menú en el Pie de Página */
-.footer-menu {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: white;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    border-top: 2px solid #5B9531;
-}
-
-/* 🔹 Estilos Generales de los Ítems del Menú */
-.footer-menu a {
-    text-decoration: none;
-    font-size: 14px;
-    color: #5B9531;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: 0.3s;
-}
-
-.footer-menu a i {
-    font-size: 20px;
-    margin-bottom: 5px;
-}
-
-/* 🔹 Emergencia Circular en el Centro */
-.emergency-container {
-    position: absolute;
-    bottom: 60px; /* Ajusta este valor para que el botón esté más arriba */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10; /* Asegura que esté encima de otros elementos */
-}
-
-/* 🔹 Estilo del Botón de Emergencia */
-.emergency {
-    width: 60px;
-    height: 60px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    text-decoration: none;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-}
-
-.emergency:hover {
-    background-color: darkred;
-}
-
-/* 🔹 Curvatura en la Barra de Menú que Rodea el Botón de Emergencia */
-.footer-menu {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: white;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    border-top: 2px solid #5B9531;
-    z-index: 5;
-    border-top-left-radius: 50px 30px; /* Curvatura en el lado izquierdo */
-    border-top-right-radius: 50px 30px; /* Curvatura en el lado derecho */
-}
-
-
-@media (max-width: 767px) {
-    .footer-menu {
-        padding-bottom: 50px;
-    }
-
-    .emergency {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
-    }
-
-    .emergency-container {
-        bottom: 50px;
-    }
-}
-
-/* 🔹 Responsividad */
-@media (max-width: 767px) {
-    .emergency-container {
-        bottom: 55px; /* También ajustado aquí para móviles */
-    }
-
-    .emergency {
-        width: 50px;
-        height: 50px;
-        font-size: 20spx;
-    }
-}
-
-/* 🔹 Responsividad */
-@media (max-width: 767px) {
-    .place-card {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .place-image {
-        width: 100px;
-        height: 100px;
-        margin-bottom: 10px;
-    }
-
-    .footer-menu {
-        padding-bottom: 50px;
-    }
-
-    .emergency {
-        width: 50px;
-        height: 50px;
-        font-size: 120px;
-    }
-}
-
-/* 🔹 Estilo para los botones "Ver Mapa" */
-.map-button {
-    text-decoration: none; /* Elimina el subrayado */
-    display: inline-flex; /* Asegura que el contenido esté alineado */
-    justify-content: center; /* Centra el contenido horizontalmente */
-    align-items: center; /* Centra el contenido verticalmente */
-    padding: 10px 20px; /* Ajusta el espaciado interno del botón */
-    font-size: 16px; /* Tamaño de la fuente */
-    cursor: pointer; /* Hace que el botón sea clickeable */
-    border-radius: 5px; /* Bordes redondeados */
-    background-color: #5B9531; /* Color de fondo */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-}
-
-.map-button:hover {
-    background-color: #5B9531; /* Color al pasar el ratón */
-}
-
-.map-button i {
-    margin-right: 5px; /* Espacio entre el ícono y el texto */
-}
-
-/* 🔹 Estilos de Mapa */
-#map {
-    height: 400px;
-    width: 100%;
-    border-radius: 10px;
-    margin-top: 10px;
-    margin-bottom: 80px; /* Agrega espacio para que no se superponga con el menú */
-    position: relative;
-    z-index: 5; /* Asegura que el mapa quede debajo del menú */
-}
-
-/* Estilo para los botones "Ver Mapa" */
-.map-button {
-    margin: 10px;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    background-color: #5B9531;
-    color: white;
-    border-radius: 5px;
-}
-
-.map-button:hover {
-    background-color: #5B9531;
-}
-
-/* 🔹 Estilos generales para pantallas pequeñas */
-@media screen and (max-width: 600px) {
-    .search-section {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        padding: 10px;
-        flex-wrap: nowrap;
-    }
-
-    .logo {
-        width: 50px;
-        height: auto;
-    }
-
-    .search-bar {
-        flex: 1;
-        font-size: 14px;
-        padding: 6px 10px;
-    }
-
-    .search-button {
-        padding: 6px 10px;
-        font-size: 14px;
-    }
-}
-
-.cards-container {
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-}
-
-.card {
-    width: 100%;
-    max-width: 350px;
-}
-
-.footer-menu {
-    flex-wrap: wrap;
-    padding: 10px;
-}
-
-.footer-menu a {
-    flex: 1 0 20%;
-    text-align: center;
-    font-size: 12px;
-}
-
-#lang-btn {
-    top: 10px;
-    right: 10px;
-    font-size: 14px;
-    padding: 8px 12px;
-}
-
-* {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-/* Bloquear contenido en pantallas grandes (PC) */
-@media (min-width: 768px) {
-    body {
-        display: none; /* Oculta todo el contenido para pantallas de PC */
-    }
-
-    /* Mostrar el mensaje de bloqueo para PC */
-    .block-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro */
-        z-index: 9999; /* Asegura que el fondo esté encima de todo */
-    }
-
-    .block-message {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 24px;
-        color: white;
-        font-weight: bold;
-        text-align: center;
-    }
-
-    .block-message p {
-        font-size: 28px;
-    }
-}
-
-/* Bloquear contenido en pantallas grandes (PC) */
-@media (min-width: 768px) {
-    .block-background {
-        display: block; /* Muestra el mensaje de bloqueo solo en pantallas grandes */
-    }
-
-    .block-message {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 24px;
-        color: white;
-        font-weight: bold;
-        text-align: center;
-    }
-
-    .block-message p {
-        font-size: 28px;
-    }
-}
-
-/* Ocultar el mensaje de bloqueo en pantallas pequeñas */
-@media (max-width: 767px) {
-    .block-background {
-        display: none; /* Oculta el mensaje de bloqueo en pantallas pequeñas */
-    }
-}
-/* 🔹 Estilo para el Botón de Cambio de Idioma */
-#lang-btn {
-    position: fixed;  /* Fija el botón en la pantalla */
-    top: 10px;        /* Distancia desde la parte superior */
-    right: 10px;      /* Distancia desde la parte derecha */
-    font-size: 14px;
-    padding: 8px 12px;
-    background-color: #5B9531;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    z-index: 100;     /* Asegura que el botón esté encima de otros elementos */
+    background: linear-gradient(to bottom, #ffeaf0, #fff5fa);
+    font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .envelope-container {
+    width: 320px;
+    height: 200px;
+    perspective: 1000px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#lang-btn:hover {
-    background-color: #5B9531; /* Cambia el color cuando el usuario pase el ratón */
-}
-
-/* 🔹 Estilos para pantallas pequeñas (móviles) */
-@media screen and (max-width: 600px) {
-    #lang-btn {
-        font-size: 12px;
-        padding: 6px 10px;
-    }
-}
-
-/* 🌐 Modal de emergencia */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
+    position: relative;
+  }
+  
+  .envelope {
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background-color: #fff;
-    padding: 20px 25px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
+    background: #fff;
+    border: 2px solid #ff9fb2;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     position: relative;
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-.close-btn {
+    overflow: hidden;
+  }
+  
+  .flap {
     position: absolute;
-    right: 15px;
-    top: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    color: #888;
-}
-
-.close-btn:hover {
-    color: #000;
-}
-
-.emergency-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 15px;
-}
-
-.emergency-list li {
-    margin-bottom: 12px;
-}
-
-.emergency-list a {
-    display: block;
-    background-color: #d9534f;
-    color: white;
-    padding: 10px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-
-.emergency-list a:hover {
-    background-color: #c9302c;
-}
-
-@keyframes fadeIn {
-    from {opacity: 0; transform: scale(0.9);}
-    to {opacity: 1; transform: scale(1);}
-}
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-bottom: 100px solid #fff;
+    z-index: 3;
+    transform-origin: top;
+    transition: transform 1s ease-in-out;
+  }
+  
+  .envelope.opened .flap {
+    transform: rotateX(180deg);
+  }
+  
+  .heart {
+    position: absolute;
+    top: 65px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    z-index: 2;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .envelope.opened .heart {
+    opacity: 0;
+  }
+  
+  .letter {
+    position: absolute;
+    top: 110px;
+    left: 10px;
+    width: 300px;
+    height: 180px;
+    background: #fff8f0;
+    border: 1px solid #f5c7c7;
+    border-radius: 8px;
+    padding: 20px;
+    font-family: 'Brush Script MT', cursive;
+    color: #4b2e2e;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(100%);
+    opacity: 0;
+    z-index: 1;
+    transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+  }
+  
+  .envelope.opened .letter {
+    transform: translateY(-210px);
+    opacity: 1;
+  }
+  
+  .message {
+    text-align: center;
+  }
+  
+  .photos img {
+    width: 100px;
+    position: absolute;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: float 6s ease-in-out infinite;
+    opacity: 0.9;
+  }
+  
+  .floating {
+    top: 20%;
+    left: 10%;
+  }
+  
+  .floating.delay1 {
+    top: 55%;
+    left: 30%;
+    animation-delay: 1s;
+  }
+  
+  .floating.delay2 {
+    top: 30%;
+    left: 70%;
+    animation-delay: 2s;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  .petals {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://pngimg.com/uploads/rose_petals/rose_petals_PNG73244.png');
+    background-size: contain;
+    background-repeat: repeat;
+    animation: petals 20s linear infinite;
+    opacity: 0.2;
+    z-index: 0;
+  }
+  
+  @keyframes petals {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 1000px; }
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
