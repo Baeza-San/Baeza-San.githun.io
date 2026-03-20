@@ -7,24 +7,24 @@
 <title>NekoDonas</title>
 <link rel="icon" type="image/png" href="ICONEKO.png">
 
-
 <style>
 body{
     margin:0;
     font-family: 'Poppins', sans-serif;
     background:#F8B6C5;
     color:#5B3B6F;
+    transition:0.5s;
+}
+
+/* CAMBIO AMARILLO */
+body.amarillo{
+    background:#FFF3B0;
+    color:#6B4F3A;
 }
 
 /* PORTADA */
-.portada{
-    position:relative;
-}
-
-.portada img{
-    width:100%;
-    display:block;
-}
+.portada{ position:relative; z-index:2; }
+.portada img{ width:100%; display:block; }
 
 /* PERFIL */
 .perfil{
@@ -32,19 +32,13 @@ body{
     height:120px;
     border-radius:50%;
     border:5px solid #F8B6C5;
-    position:absolute;
-    left:50%;
-    bottom:-60px;
-    transform:translateX(-50%);
+    position:relative; /* 🔥 ya no absolute */
+    margin:-60px auto 0 auto; /* 🔥 lo sube y centra */
     overflow:hidden;
     background:white;
+    z-index:999; /* 🔥 arriba de TODO */
 }
-
-.perfil img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
+.perfil img{ width:100%; height:100%; object-fit:cover; }
 
 /* INFO */
 .info{
@@ -52,23 +46,14 @@ body{
     text-align:center;
     padding:15px;
     background:#FDE8C8;
+    position:relative;
+    z-index:2;
 }
-
-.info h1{
-    margin:0px;
-    color:#E64B9A;
-    font-size:28px;
-}
-
-.info p{
-    margin:3px;
-    font-size:14px;
-}
+.info h1{ margin:0; color:#E64B9A; font-size:28px; }
+.info p{ margin:3px; font-size:14px; }
 
 /* PRODUCTOS */
-.productos{
-    padding:15px;
-}
+.productos{ padding:15px; position:relative; z-index:2; }
 
 .card{
     background:white;
@@ -77,15 +62,15 @@ body{
     margin-bottom:20px;
     box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
+.card img{ width:100%; border-radius:15px; }
+.card h3{ margin:10px 0; }
 
-.card img{
-    width:100%;
-    border-radius:15px;
+/* TEMA AMARILLO */
+.tema-amarillo{
+    background:#FFF3B0;
+    border:2px solid #D4A373;
 }
-
-.card h3{
-    margin:10px 0;
-}
+.tema-amarillo h3{ color:#8B5E3C; }
 
 .boton{
     display:block;
@@ -98,16 +83,57 @@ body{
     font-weight:bold;
     margin-top:10px;
 }
-
-.boton:hover{
-    background:#5B3B6F;
-}
+.boton:hover{ background:#5B3B6F; }
 
 /* COMENTARIOS */
 .comentarios{
     background:#FDE8C8;
     padding:20px;
     text-align:center;
+    position:relative;
+    z-index:2;
+}
+
+/* ===== ANIMACIONES ===== */
+.fondo-amarillo{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:999;
+    display:none; /* 🔥 oculto al inicio */
+}
+
+/* PETALOS */
+.petalo{
+    position:absolute;
+    width:12px;
+    height:18px;
+    background:#FFD84D;
+    border-radius:50% 50% 50% 0;
+    transform:rotate(45deg);
+    opacity:0.8;
+    animation:caer 7s linear infinite;
+}
+
+@keyframes caer{
+    0%{ transform:translateY(-50px) rotate(0deg); }
+    100%{ transform:translateY(100vh) rotate(360deg); }
+}
+
+/* ABEJAS */
+.abeja{
+    position:absolute;
+    width:35px;
+    animation:volar 10s linear infinite;
+}
+
+@keyframes volar{
+    0%{ transform:translateX(-100px); }
+    50%{ transform:translateX(50vw) translateY(20px); }
+    100%{ transform:translateX(110vw); }
 }
 </style>
 </head>
@@ -115,68 +141,104 @@ body{
 <body>
 
 <div class="portada">
-    <img src="PORNEKODONAS.png" alt="Portada NekoDonas">
-    
-    <div class="perfil">
-        <img src="ICONEKO.png" alt="Logo NekoDonas">
-    </div>
+    <img src="PORNEKODONAS.png">
+</div>
+
+<div class="perfil">
+    <img src="ICONEKO.png">
 </div>
 
 <div class="info">
-    <h1>.</h1>
     <h1>NekoDonas</h1>
     <div class="contacto">
-    <p><i class="fa-brands fa-facebook"></i> NekoDonas</p>
-    <p><i class="fa-solid fa-phone"></i> 982 319 6813</p>
-</div>
-
+        <p><i class="fa-brands fa-facebook"></i> NekoDonas</p>
+        <p><i class="fa-solid fa-phone"></i> 982 319 6813</p>
+    </div>
 </div>
 
 <div class="productos">
 
+    <!-- 1 -->
     <div class="card">
         <img src="individual.png">
         <h3>Mini Dona Individual $6 pesos</h3>
-        <a class="boton" 
-        href="https://wa.me/529615386400?text=Hola,%20quiero%20la%20Mini%20Dona%20Individual" 
-        target="_blank">
-        Pedir por WhatsApp
-        </a>
+        <a class="boton" href="https://wa.me/529615386400?text=Hola,%20quiero%20la%20Mini%20Dona%20Individual" target="_blank">Pedir por WhatsApp</a>
     </div>
 
+    <!-- 2 -->
     <div class="card">
         <img src="brocheta.png">
         <h3>Brocheta (3 mini donas) $25 pesos</h3>
-        <a class="boton" 
-        href="https://wa.me/529615386400?text=Hola,%20quiero%20la%20Brocheta%20de%203%20mini%20donas" 
-        target="_blank">
-        Pedir por WhatsApp
-        </a>
+        <a class="boton" href="https://wa.me/529615386400?text=Hola,%20quiero%20la%20Brocheta" target="_blank">Pedir por WhatsApp</a>
     </div>
 
+    <!-- 3 -->
     <div class="card">
         <img src="cajas.png">
         <h3>Caja Especial (6 piezas) $40 pesos</h3>
-        <a class="boton" 
-        href="https://wa.me/529615386400?text=Hola,%20quiero%20la%20Caja%20Especial%20de%206%20donas" 
-        target="_blank">
-        Pedir por WhatsApp
-        </a>
+        <a class="boton" href="https://wa.me/529615386400?text=Hola,%20quiero%20la%20Caja" target="_blank">Pedir por WhatsApp</a>
+    </div>
+<div class="zona-amarilla">
+
+    <!-- 4 -->
+    <div class="card tema-amarillo">
+        <img src="IndividualAMA.jpeg">
+        <h3>Mini Dona Individual $8 pesos</h3>
+        <a class="boton" href="https://wa.me/529615386400?text=Hola,%20quiero%20la%20Caja" target="_blank">Pedir por WhatsApp</a>
+    </div>
+
+    <!-- 5 -->
+    <div class="card tema-amarillo">
+        <img src="BrochetaAMA.jpeg">
+        <h3>Brocheta (3 mini donas) $30 pesos</h3>
+        <a class="boton" href="https://wa.me/529615386400?text=Hola,%20quiero%20la%20Caja" target="_blank">Pedir por WhatsApp</a>
+    </div>
+
+    <!-- 6 -->
+    <div class="card tema-amarillo">
+        <img src="CajaAMA.jpeg">
+        <h3>Caja Especial (6 piezas) $50 pesos</h3>
+        <a class="boton" href="https://wa.me/529615386400?text=Hola,%20quiero%20la%20Caja" target="_blank">Pedir por WhatsApp</a>
     </div>
 
 </div>
 
-    <div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v24.0&appId=APP_ID"></script>
-
 <div class="comentarios">
     <h2>Comentarios</h2>
-    <p>Déjanos tu opinión :)</p>
-    <div class="fb-comments" data-href="https://baeza-san.github.io/Baeza-San.githun.io/NEKODONAS.html" data-width="10" data-numposts="10"></div>
+    <p>Déjanos tu opinión</p>
 </div>
 
-</body>
+<!-- ANIMACIONES -->
+<div class="fondo-amarillo">
+
+    <!-- ABEJAS -->
+    <img src="abeja.png" class="abeja" style="top:10%;">
+    <img src="abeja.png" class="abeja" style="top:30%; animation-delay:2s;">
+    <img src="abeja.png" class="abeja" style="top:50%; animation-delay:4s;">
+    <img src="abeja.png" class="abeja" style="top:70%; animation-delay:6s;">
+
+    <!-- PETALOS -->
+    <div class="petalo" style="left:10%; animation-delay:1s;"></div>
+    <div class="petalo" style="left:30%; animation-delay:2s;"></div>
+    <div class="petalo" style="left:50%; animation-delay:3s;"></div>
+    <div class="petalo" style="left:70%; animation-delay:4s;"></div>
+    <div class="petalo" style="left:90%; animation-delay:5s;"></div>
+
+</div>
+<script>
+window.addEventListener("scroll", function(){
+    let zona = document.querySelector(".zona-amarilla");
+    let fondo = document.querySelector(".fondo-amarillo");
+
+    let rect = zona.getBoundingClientRect();
+
+    if(rect.top < window.innerHeight && rect.bottom > 0){
+        document.body.classList.add("amarillo");
+        fondo.style.display = "block";
+    } else {
+        document.body.classList.remove("amarillo");
+        fondo.style.display = "none";
+    }
+});
+</script></body>
 </html>
-
-
-
